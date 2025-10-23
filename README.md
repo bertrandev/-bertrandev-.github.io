@@ -1,0 +1,1057 @@
+[index.html](https://github.com/user-attachments/files/23096459/index.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bertrand - Interactive Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #1e2235;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+
+    /* Cursor Trail */
+    .cursor-trail {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, #667eea, transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      animation: trail 0.8s ease-out forwards;
+    }
+
+    @keyframes trail {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    /* Header with Glassmorphism */
+    header {
+      background: rgba(22, 25, 32, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #707979, #c3a7e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotate(-2deg);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+    }
+
+    nav a:hover {
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+      transform: translateY(-2px);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    nav a:hover::after {
+      width: 80%;
+    }
+
+    /* Hero Section with Typing Animation */
+    .hero {
+      text-align: center;
+      padding: 150px 2rem 100px;
+      color: white;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      animation: slideInFromTop 1s ease-out;
+    }
+
+    .typing-text {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      min-height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.3rem;
+      background: #667eea;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .hero-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 2rem auto;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      animation: bounceIn 1s ease-out 0.6s both;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .hero-image:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .hero-image:hover img {
+      transform: scale(1.1);
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, #116164, #151119);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      font-weight: 600;
+      animation: slideInFromBottom 1s ease-out 0.9s both;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: all 0.5s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Main Content with Card Animations */
+    main {
+      background: lightgrey;
+      margin: 0 2rem;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .main-content {
+      padding-right: 2rem;
+      animation: slideInFromLeft 1s ease-out;
+    }
+
+    .main-content h2 {
+      color: #000000;
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .main-content h2:hover {
+      transform: translateX(10px);
+      color: #667eea;
+    }
+
+    .main-content h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transition: width 0.8s ease;
+    }
+
+    .main-content h2:hover::after {
+      width: 200px;
+    }
+
+    .main-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #000000;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s forwards;
+      transition: all 0.3s ease;
+    }
+
+    .main-content p:hover {
+      transform: translateX(5px);
+      color: #333;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .skill {
+      background: linear-gradient(45deg, #116164, #151119);
+      color: white;
+      padding: 1rem;
+      border-radius: 15px;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(50px);
+      opacity: 0;
+      animation: skillSlideIn 0.6s ease-out forwards;
+    }
+
+    .skill:nth-child(1) { animation-delay: 0.1s; }
+    .skill:nth-child(2) { animation-delay: 0.2s; }
+    .skill:nth-child(3) { animation-delay: 0.3s; }
+    .skill:nth-child(4) { animation-delay: 0.4s; }
+    .skill:nth-child(5) { animation-delay: 0.5s; }
+    .skill:nth-child(6) { animation-delay: 0.6s; }
+
+    .skill::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: all 0.5s;
+    }
+
+    .skill:hover::before {
+      left: 100%;
+    }
+
+    .skill:hover {
+      transform: translateY(-10px) rotateX(10deg);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(45deg, #667eea, #764ba2);
+    }
+
+    @keyframes skillSlideIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Interactive Sidebar */
+    .sidebar {
+      background: rgba(245, 245, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 15px;
+      height: fit-content;
+      animation: slideInFromRight 1s ease-out;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+      color: #19191a;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .sidebar-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-image:hover {
+      transform: scale(1.05);
+      border-radius: 20px;
+    }
+
+    .sidebar-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-image:hover img {
+      transform: scale(1.1) rotate(2deg);
+      border-radius: 20px;
+    }
+
+    .contact-info {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin-top: 1.5rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .contact-info:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-info h3 {
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+      color: #333;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .contact-item:hover {
+      background: rgba(102, 126, 234, 0.1);
+      transform: translateX(5px);
+    }
+
+    .contact-item i {
+      color: #667eea;
+      font-size: 1.2rem;
+      min-width: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover i {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    .contact-item a {
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: #764ba2;
+    }
+
+    /* Interactive Hobbies Section */
+    .hobbies {
+      padding: 3rem 2rem;
+      text-align: center;
+      background: rgba(245, 245, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin-top: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hobbies h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #333;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .hobby-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .hobby {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
+      width: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hobby::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+
+    .hobby:hover::before {
+      opacity: 0.1;
+    }
+
+    .hobby i {
+      font-size: 2.5rem;
+      color: #667eea;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hobby p {
+      font-size: 1rem;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    .hobby:hover {
+      transform: translateY(-15px) rotateY(10deg);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+    }
+
+    .hobby:hover i {
+      transform: scale(1.3) rotate(360deg);
+      color: #764ba2;
+    }
+
+    .hobby:hover p {
+      color: #667eea;
+      transform: scale(1.05);
+    }
+
+    /* Resume Button with Glow Effect */
+    .resume {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .btn-resume {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, #185e62, #3a1e3f);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-resume::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: all 0.6s;
+    }
+
+    .btn-resume:hover::before {
+      left: 100%;
+    }
+
+    .btn-resume:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+      background: linear-gradient(45deg, #764ba2, #667eea);
+    }
+
+    .btn-resume i {
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-resume:hover i {
+      transform: rotate(360deg);
+    }
+
+    /* Footer with Social Animation */
+    footer {
+      background: #000000;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .social-nav {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .social-nav a {
+      color: #333;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      padding: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+    }
+
+    .social-nav a:hover {
+      color: #667eea;
+      transform: translateY(-5px) rotate(360deg);
+      background: rgba(102, 126, 234, 0.2);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Animations */
+    @keyframes slideInFromTop {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInFromBottom {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(0deg);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05) rotate(180deg);
+      }
+      70% {
+        transform: scale(0.9) rotate(270deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(360deg);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav ul {
+        gap: 1rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem 1rem;
+      }
+
+      .main-content {
+        padding-right: 0;
+      }
+
+      main {
+        margin: 0 1rem;
+      }
+
+      .skills {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+
+      .hobby-grid {
+        gap: 1rem;
+      }
+
+      .hobby {
+        width: 120px;
+        padding: 1.5rem;
+      }
+
+      .social-nav {
+        gap: 10px;
+      }
+    }
+
+    /* Projects Section */
+.projects {
+  padding: 3rem 2rem;
+  background: rgba(245, 245, 255, 0.95);
+  border-radius: 20px;
+  margin: 3rem auto;
+  max-width: 1000px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.project-grid {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem; /* space between cards */
+}
+
+.project-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(102,126,234,0.3);
+}
+
+.project-card h3 {
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+  </style>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<body>
+  <!-- Animated Particles Background -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="logo" id="logo">GISIMBA Bertrand</div>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#hobbies">Hobbies</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <h1>Welcome to My Portfolio</h1>
+    <div class="typing-text" id="typingText">
+      <span id="typewriter"></span>
+    </div>
+    <div class="hero-image" onclick="imageClickEffect(this)">
+      <img src="images/bertrand.jpg" alt="Portrait of Bertrand" class="profile-pic" loading="lazy"/>
+    </div>
+    <a href="#about" class="cta-button" onclick="buttonClickEffect(this)">Learn More About Me</a>
+  </section>
+
+  <!-- Main Content -->
+  <main>
+    <div class="content-grid">
+      <article class="main-content" id="about">
+        <h2 onclick="titleClickEffect(this)">About Me</h2>
+        <p>Hello! I'm Bertrand GISIMBA, a beginner developer with a passion for creating amazing web experiences. I'm constantly learning new technologies and pushing myself to grow in the field of web development.</p>
+        <p>My journey in programming started recently, but I'm committed to mastering the fundamentals and building projects that make a difference. I believe in clean code, user-centered design, and continuous improvement.</p>
+        
+        <h3>Skills I'm Learning</h3>
+        <div class="skills">
+          <div class="skill" onclick="skillClickEffect(this)">HTML5</div>
+          <div class="skill" onclick="skillClickEffect(this)">CSS3</div>
+          <div class="skill" onclick="skillClickEffect(this)">JavaScript</div>
+          <div class="skill" onclick="skillClickEffect(this)">Responsive Design</div>
+          <div class="skill" onclick="skillClickEffect(this)">Git/GitHub</div>
+          <div class="skill" onclick="skillClickEffect(this)">Problem Solving</div>
+        </div>
+          <!-- Projects Section -->
+<section class="projects" id="projects">
+  <h2 style="text-align:center; margin:2rem 0; color:#333;">My Projects</h2>
+  <div class="project-grid">
+    <div class="project-card">
+      <h3>Coming Soon 🚀</h3>
+      <p>Exciting projects are on the way...</p>
+    </div>
+    <div class="project-card">
+      <h3>Coming Soon 🚀</h3>
+      <p>Stay tuned for updates!</p>
+      </div>
+      <div class="project-card">
+        <h3>Coming Soon 🚀</h3>
+        <p>stay tuned for updates!</p>
+    </div>
+   </div>
+</section>
+</article>
+      <aside class="sidebar" id="projects">
+        <h2>Quick Info</h2>
+        <div class="sidebar-image" onclick="sidebarImageEffect(this)">
+          <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop" alt="Bertrand working on code" />
+        </div>
+        <p>I'm currently working on improving my skills and building my first projects. Stay tuned for updates on my coding journey!</p>
+        
+        <div class="contact-info" id="contact">
+          <h3>Get In Touch</h3>
+          <div class="contact-item" onclick="contactClickEffect(this)">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <a href="mailto:bertrandg48@gmail.com">bertrandg48@gmail.com</a>
+          </div> 
+          <div class="contact-item" onclick="contactClickEffect(this)">
+           <i class="fa fa-phone"></i>
+           <a href="tel:+250780498777">+250 780 498 777</a>
+          </div>
+          <div class="contact-item" onclick="contactClickEffect(this)">
+           <i class="fa-brands fa-instagram"></i>
+           <a href="https://www.instagram.com/__gisimba" target="_blank">@__gisimba</a>
+          </div> 
+          <div class="contact-item" onclick="contactClickEffect(this)">
+            <i class="fa fa-map-marker-alt"></i>
+             Kigali, Rwanda
+          </div>
+          <div class="contact-item" onclick="contactClickEffect(this)">💼 Open to opportunities</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+    <!-- Hobbies Section -->
+    <section class="hobbies" id="hobbies">
+      <h2>Hobbies & Interests</h2>
+      <div class="hobby-grid">
+        <div class="hobby" onclick="hobbyClickEffect(this)" data-hobby="robotics">
+          <i class="fa fa-code"></i>
+          <p>Robotics & Programming</p>
+        </div>
+         <div class="hobby" onclick="hobbyClickEffect(this)" data-hobby="design">
+          <i class="fa fa-paint-brush"></i>
+          <p>Graphic Design</p>
+        </div>
+        <div class="hobby" onclick="hobbyClickEffect(this)" data-hobby="music">
+          <i class="fa fa-music"></i>
+          <p>Music</p>
+        </div>
+         <div class="hobby" onclick="hobbyClickEffect(this)" data-hobby="football">
+          <i class="fa fa-futbol"></i>
+          <p>Football</p>
+        </div>
+       
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section class="resume">
+      <a href="resume.pdf" class="btn-resume" target="_blank">
+        <span>Download Resume</span>
+        <i class="fa fa-download"></i>
+      </a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-nav">
+      <a href="https://github.com/bertrandev" target="_blank" onclick="socialClickEffect(this)">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="https://instagram.com/__gisimba" target="_blank" onclick="socialClickEffect(this)">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://linkedin.com/in/bertrand-gisimba" target="_blank" onclick="socialClickEffect(this)">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+      <a href="https://twitter.com/__gisimba" target="_blank" onclick="socialClickEffect(this)">
+        <i class="fa-brands fa-twitter"></i>
+      </a>
+    </div> 
+    <p>&copy; 2025 Proudly made by Gisimba Bertrand.</p>
+  </footer>
+  </body>
+<script>
+ /* ===== Typing Animation (Fixed & Smooth) ===== */
+ const phrases = ["Web Developer", "Designer", "Robotics Enthusiast", "Educator"];
+ let i = 0;  // phrase index
+ let j = 0;  // letter index
+ let isDeleting = false;
+ const typeWriter = document.getElementById("typewriter");
+
+ function loop() {
+  let current = phrases[i];
+  let text = current.substring(0, j);
+  typeWriter.innerHTML = text;
+
+  if (!isDeleting && j < current.length) {
+    j++;
+  } else if (isDeleting && j > 0) {
+    j--;
+  } else if (!isDeleting && j === current.length) {
+    // pause at end of phrase
+    isDeleting = true;
+    setTimeout(loop, 1500);
+    return;
+  } else if (isDeleting && j === 0) {
+    // move to next phrase
+    isDeleting = false;
+    i = (i + 1) % phrases.length;
+  }
+
+  const speed = isDeleting ? 50 : 100; // typing vs deleting speed
+  setTimeout(loop, speed);
+  }
+
+ loop();
+
+ // Smooth scroll for nav links
+ document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    const offset = 80; // height of fixed header
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = target.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
+  });
+});
+document.getElementById("logo").addEventListener("click", () => {
+  createFireworks(); // existing animation
+  setTimeout(() => location.reload(), 500); // delay reload slightly if needed
+});
+// Fireworks effect on logo click
+</script>
